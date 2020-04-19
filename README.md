@@ -17,20 +17,16 @@
 
  <code>
  import {MetaDataBlock} from './types-internal/block-data';
-
  let counter = 0;
-
  export default {
    createMeta() {
      let id = 'block-' + counter;
      console.log ( 'Creating Meta: ' + id );
      const data = '';
-
      const existId = () => {
        if ( document.getElementById(id)) {
          return true; } else { return false; }
      };
-
      do {
        counter++;
        id = 'block-' + counter;
