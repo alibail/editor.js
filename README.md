@@ -6,16 +6,16 @@
 
 <p>You can modify the metadata object by editing the file <b>src/types-internal/block-data</b> and changing the below to return the format you require;</p>
 
-<code>
+<pre><code>
  export interface MetaDataBlock {
    id?: string;
    data?: string;
  }
- </code>
+ </code></pre>
 
  <p>The code that creates the initial metadata object is located in file <b>/mixin.ts</b> and should be modified to meet your needs, the code below simply creates a unique ID for the block within the page and a blank data string.</p>
 
- <code>
+ <pre><code>
  import {MetaDataBlock} from './types-internal/block-data';
  let counter = 0;
  export default {
@@ -34,4 +34,4 @@
      return {id, data: ''};
    },
  };
- </code>
+ </code></pre>
