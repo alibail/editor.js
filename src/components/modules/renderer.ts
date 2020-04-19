@@ -67,10 +67,11 @@ export default class Renderer extends Module {
     const tool = item.type;
     const data = item.data;
     const settings = item.settings;
+    const metadata = item.metadata;
 
     if (tool in Tools.available) {
       try {
-        BlockManager.insert(tool, data, settings);
+        BlockManager.insert(tool, data, settings, metadata);
       } catch (error) {
         _.log(`Block «${tool}» skipped because of plugins error`, 'warn', data);
         throw Error(error);
@@ -93,7 +94,7 @@ export default class Renderer extends Module {
         stubData.title = toolToolboxSettings.title || userToolboxSettings.title || stubData.title;
       }
 
-      const stub = BlockManager.insert(Tools.stubTool, stubData, settings);
+      const stub = BlockManager.insert(Tools.stubTool, stubData, settings, metadata);
 
       stub.stretched = true;
 

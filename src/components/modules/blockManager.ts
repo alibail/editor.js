@@ -12,6 +12,8 @@ import $ from '../dom';
 import * as _ from '../utils';
 import Blocks from '../blocks';
 import {BlockTool, BlockToolConstructable, BlockToolData, PasteEvent, ToolConfig} from '../../../types';
+import {MetaDataBlock} from '../../types-internal/block-data';
+import mixin from '../../mixin';
 
 /**
  * @typedef {BlockManager} BlockManager
@@ -202,13 +204,14 @@ export default class BlockManager extends Module {
    * @param {String} toolName - tools passed in editor config {@link EditorConfig#tools}
    * @param {Object} data - constructor params
    * @param {Object} settings - block settings
+   * @param {Object} metadata - Meta DAta Block
    *
    * @return {Block}
    */
-  public composeBlock(toolName: string, data: BlockToolData = {}, settings: ToolConfig = {}): Block {
+  public composeBlock(toolName: string, data: BlockToolData = {}, settings: ToolConfig = {}, metadata: MetaDataBlock = {}): Block {
     const toolInstance = this.Editor.Tools.construct(toolName, data) as BlockTool;
     const toolClass = this.Editor.Tools.available[toolName] as BlockToolConstructable;
-    const block = new Block(toolName, toolInstance, toolClass, settings, this.Editor.API.methods);
+    const block = new Block(toolName, toolInstance, toolClass, settings, this.Editor.API.methods, metadata);
 
     this.bindEvents(block);
 
@@ -221,6 +224,7 @@ export default class BlockManager extends Module {
    * @param {String} toolName — plugin name, by default method inserts initial block type
    * @param {Object} data — plugin data
    * @param {Object} settings - default settings
+   * @param {Object} metadata - Meta DAta Object
    * @param {number} index - index where to insert new Block
    * @param {boolean} needToFocus - flag shows if needed to update current Block index
    *
@@ -230,10 +234,12 @@ export default class BlockManager extends Module {
     toolName: string = this.config.initialBlock,
     data: BlockToolData = {},
     settings: ToolConfig = {},
+    metadata: MetaDataBlock = {},
     index: number = this.currentBlockIndex + 1,
     needToFocus: boolean = true,
   ): Block {
-    const block = this.composeBlock(toolName, data, settings);
+    metadata = (metadata === null) ? mixin.createMeta() : metadata;
+    const block = this.composeBlock(toolName, data, settings, metadata);
 
     this._blocks[index] = block;
 
@@ -283,7 +289,7 @@ export default class BlockManager extends Module {
    * @return {Block} inserted Block
    */
   public insertInitialBlockAtIndex(index: number, needToFocus: boolean = false) {
-    const block = this.composeBlock(this.config.initialBlock, {}, {});
+    const block = this.composeBlock(this.config.initialBlock, {}, {}, mixin.createMeta());
 
     this._blocks[index] = block;
 

@@ -18,3 +18,14 @@ export interface ValidatedData {
     time?: number;
     isValid: boolean;
 }
+
+/**
+ * Interface for the MetaData part of the block
+ *
+ * Change this to match the type of data you wish to store along
+ * with each block. Remember to update src/mixin.ts to your new format. 
+ **/
+ export interface MetaDataBlock {
+   id?: string;
+   data?: string;
+ }

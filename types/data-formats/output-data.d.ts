@@ -1,4 +1,5 @@
 import {BlockToolData} from '../tools';
+import {MetaDataBlock} from '../../src/types-internal/block-data.d.ts';
 
 export interface OutputData {
   /**
@@ -16,6 +17,7 @@ export interface OutputData {
    */
   blocks: Array<{
     type: string;
+    metadata?: MetaDataBlock;
     data: BlockToolData
   }>;
 }

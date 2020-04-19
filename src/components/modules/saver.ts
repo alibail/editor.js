@@ -70,7 +70,7 @@ export default class Saver extends Module {
 
     _.log('[Editor.js saving]:', 'groupCollapsed');
 
-    allExtractedData.forEach(({tool, data, time, isValid}) => {
+    allExtractedData.forEach(({tool, data, time, isValid, metadata}) => {
       totalTime += time;
 
       /**
@@ -97,6 +97,7 @@ export default class Saver extends Module {
       blocks.push({
         type: tool,
         data,
+        metadata,
       });
     });
 

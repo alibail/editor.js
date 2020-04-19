@@ -10,6 +10,8 @@ import {
 } from '../../types';
 
 import {SavedData} from '../types-internal/block-data';
+import {MetaDataBlock} from '../types-internal/block-data';
+import mixin from '../mixin';
 import $ from './dom';
 import * as _ from './utils';
 
@@ -341,6 +343,11 @@ export default class Block {
   public tunes: BlockTune[];
 
   /**
+   * Meta Object
+   **/
+   public metadata: MetaDataBlock;
+
+  /**
    * Cached inputs
    * @type {HTMLElement[]}
    */
@@ -393,6 +400,7 @@ export default class Block {
    * @param {Object} toolClass — Tool's class
    * @param {Object} settings - default settings
    * @param {Object} apiMethods - Editor API
+   * @param {Object} metadata - Meta Data Object
    */
   constructor(
     toolName: string,
@@ -400,12 +408,14 @@ export default class Block {
     toolClass: BlockToolConstructable,
     settings: ToolConfig,
     apiMethods: API,
+    metadata: MetaDataBlock,
   ) {
     this.name = toolName;
     this.tool = toolInstance;
     this.class = toolClass;
     this.settings = settings;
     this.api = apiMethods;
+    this.metadata = metadata;
     this.holder = this.compose();
 
     this.mutationObserver = new MutationObserver(this.didMutated);
@@ -467,6 +477,7 @@ export default class Block {
           tool: this.name,
           data: finishedExtraction,
           time: measuringEnd - measuringStart,
+          metadata: this.metadata,
         };
       })
       .catch((error) => {
@@ -564,9 +575,15 @@ export default class Block {
     const wrapper = $.make('div', Block.CSS.wrapper) as HTMLDivElement,
       contentNode = $.make('div', Block.CSS.content),
       pluginsContent = this.tool.render();
+    if ( this.metadata.id == '' ) {
+      this.metadata = this.metadata;
+    } else {
+      this.metadata = mixin.createMeta();
+    }
 
     contentNode.appendChild(pluginsContent);
     wrapper.appendChild(contentNode);
+    wrapper.setAttribute('id', this.metadata.id );
     return wrapper;
   }
 }

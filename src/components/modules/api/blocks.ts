@@ -173,6 +173,7 @@ export default class BlocksAPI extends Module {
       type,
       data,
       config,
+      null,
       index,
       needToFocus,
     );
