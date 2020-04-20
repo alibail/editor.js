@@ -41,4 +41,4 @@
  <h3>Using this build</h3>
  <p>If the code meets your requirements you can use it directly by saving the file <b>dist/editor.js</b> in place of the file provided by the official project. Everything else remains the same as the official project including plugin compatibility.</p>
 
-<p>Thanks to nmannitz for their original modification adding an ID to the block.</p>
+<p>Thanks to @nmannitz for their original modification adding an ID to the block.</p>
