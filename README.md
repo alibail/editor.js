@@ -2,6 +2,8 @@
 
 <p><b>Note: This code may not be actively maintained but is available for anyone who has these requirements.</b></p>
 
+<p>Editor.js Version: 2.17</p>
+
 <p>The project creates an additional metadata item assigned to all blocks within the editor, to which a unique block ID is assigned along with a blank string called data.</p>
 
 <p>You can modify the metadata object by editing the file <b>src/types-internal/block-data</b> and changing the below to return the format you require;</p>
