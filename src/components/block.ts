@@ -575,7 +575,7 @@ export default class Block {
     const wrapper = $.make('div', Block.CSS.wrapper) as HTMLDivElement,
       contentNode = $.make('div', Block.CSS.content),
       pluginsContent = this.tool.render();
-    if ( this.metadata.id == '' ) {
+    if ( this.metadata.id != '' ) {
       this.metadata = this.metadata;
     } else {
       this.metadata = mixin.createMeta();
